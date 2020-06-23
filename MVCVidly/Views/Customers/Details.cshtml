@@ -1,0 +1,26 @@
+﻿@model MVCVidly.Models.Customer
+@{
+    ViewBag.Title = "Customer Details";
+}
+
+<h2>Customer Details</h2>
+
+@{ 
+    var isSubscribe = Model.IsSubscribedToNewsletter ? "Newsletter Subscribed" : "Newsletter Not Subscribed";
+}
+
+<ul>
+    <li>@Model.Name
+        <ul>
+            <li>@isSubscribe</li>
+            <li>@Convert.ToDateTime(Model.BirthDate).ToString("dd/MM/yyyy")</li>
+            <li>@Model.MembershipType.Name</li>
+            <li>£@Model.MembershipType.SignUpFee</li>
+            <li>@Model.MembershipType.DurationInMonth Month</li>
+            <li>@Model.MembershipType.DiscountRate% Discount</li>
+        </ul>
+    </li>
+</ul>
+
+@Html.ActionLink("Back To List","Index","Customers")
+
