@@ -33,7 +33,7 @@ else
             using (Html.BeginForm("Delete", "Customers", new { id = customer.Id }))
             {
             <tr>
-                <td>@customer.Name</td>
+                <td>@Html.ActionLink(@customer.Name,"Edit",new {id=customer.Id})</td>
                 <td>@customer.MembershipType.Name</td>
                 <td>
                     @Html.ActionLink("Details", "Details", "Customers", new { id = customer.Id }, new { @class = "btn btn-primary" })

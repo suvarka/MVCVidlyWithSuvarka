@@ -6,7 +6,7 @@ using MVCVidly.Models;
 
 namespace MVCVidly.ViewModel
 {
-    public class NewCustomerViewModel
+    public class CustomerFormViewModel
     {
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
 

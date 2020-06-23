@@ -12,8 +12,11 @@ namespace MVCVidly.Models
         [Required]
         public string Name { get; set; }
         public MembershipType MembershipType { get; set; }
+
+        [Display(Name ="Membership Type")]
         public byte MembershipTypeId { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
+        [Display(Name ="Birth Date")]
         public DateTime? BirthDate { get; set; }
     }
 }

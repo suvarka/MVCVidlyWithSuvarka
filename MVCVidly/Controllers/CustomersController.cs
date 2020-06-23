@@ -32,35 +32,56 @@ namespace MVCVidly.Controllers
         public ActionResult CreateCustomer()
         {
             var membershipTypeList = _context.MembershipTypes.ToList();
-            NewCustomerViewModel newCustomerViewModel = new NewCustomerViewModel()
+            CustomerFormViewModel newCustomerViewModel = new CustomerFormViewModel()
             {
                 MembershipTypes = membershipTypeList,
                 Customer = new Customer()
             };
-            return View(newCustomerViewModel);
+            return View("CustomerForm", newCustomerViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCustomer(Customer customer)
+        public ActionResult Save(Customer customer)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                var membershipTypeList = _context.MembershipTypes.ToList();
+                CustomerFormViewModel newCustomerViewModel = new CustomerFormViewModel()
+                {
+                    MembershipTypes = membershipTypeList,
+                    Customer = customer
+                };
+                return View("CustomerForm", newCustomerViewModel);
+            }
+
+            if (customer.Id == 0)
             {
                 _context.Customers.Add(customer);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
             }
             else
             {
-                var membershipTypeList = _context.MembershipTypes.ToList();
-                NewCustomerViewModel newCustomerViewModel = new NewCustomerViewModel()
-                {
-                    MembershipTypes = membershipTypeList,
-                    Customer = new Customer()
-                };
-                return View("CreateCustomer", newCustomerViewModel);
+                var customerDetails = _context.Customers.Where(c => c.Id == customer.Id).FirstOrDefault();
+                customerDetails.Name = customer.Name;
+                customerDetails.MembershipTypeId = customer.MembershipTypeId;
+                customerDetails.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                customerDetails.BirthDate = customer.BirthDate;                
             }
-                
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+            CustomerFormViewModel newCustomerViewModel = new CustomerFormViewModel()
+            {
+                MembershipTypes = _context.MembershipTypes.ToList(),
+                Customer = customer
+            };
+
+            return View("CustomerForm", newCustomerViewModel);
         }
         public ActionResult Details(int id)
         {
