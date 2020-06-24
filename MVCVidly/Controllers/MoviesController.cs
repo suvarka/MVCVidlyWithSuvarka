@@ -34,24 +34,79 @@ namespace MVCVidly.Controllers
         public ActionResult CreateMovie()
         {
             var genreList = _context.Genres.ToList();
-            NewMovieViewModel newMovieViewModel = new NewMovieViewModel()
+            MovieFormViewModel newMovieViewModel = new MovieFormViewModel()
             {
                 Genres = genreList,
                 Movie = new Movie()
 
 
             };
-            return View(newMovieViewModel);
+            return View("MovieForm", newMovieViewModel);
             
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateMovie(Movie movie)
+        public ActionResult Save(Movie movie)
         {
-            _context.Movies.Add(movie);
+            if (!ModelState.IsValid)
+            {
+                var genreList = _context.Genres.ToList();
+                MovieFormViewModel newMovieViewModel = new MovieFormViewModel()
+                {
+                    Genres = genreList,
+                    Movie = new Movie()
+
+
+                };
+                return View("MovieForm", newMovieViewModel);
+
+            }
+
+            if (movie.Id == 0)
+            {
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieDetails = _context.Movies.Where(m => m.Id == movie.Id).FirstOrDefault();
+                movieDetails.Name = movie.Name;
+                movieDetails.GenreId = movie.GenreId;
+                movieDetails.DateAdded = movie.DateAdded;
+                movieDetails.ReleaseDate = movie.ReleaseDate;
+                movieDetails.NumberInStock = movie.NumberInStock;
+
+
+
+            }
+               
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Edit(int id)
+        {
+            var movieList = _context.Movies.Where(m => m.Id == id).FirstOrDefault();
+            MovieFormViewModel movieFormViewModel = new MovieFormViewModel()
+            {
+                Genres = _context.Genres.ToList(),
+                Movie=movieList
+            };
+            return View("MovieForm", movieFormViewModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var movieDetails = _context.Movies.Include(m => m.Genre).Where(m => m.Id == id).FirstOrDefault();
+            return View(movieDetails);
+        }
+
+        public RedirectToRouteResult Delete(int id)
+        {
+            var movieDetails = _context.Movies.Where(m => m.Id ==id).FirstOrDefault();
+            _context.Movies.Remove(movieDetails);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

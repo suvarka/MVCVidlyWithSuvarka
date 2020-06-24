@@ -6,7 +6,7 @@ using MVCVidly.Models;
 
 namespace MVCVidly.ViewModel
 {
-    public class NewMovieViewModel
+    public class MovieFormViewModel
     {
         public IEnumerable<Genre> Genres { get; set; }
 
