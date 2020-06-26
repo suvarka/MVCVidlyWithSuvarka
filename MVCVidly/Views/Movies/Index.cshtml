@@ -4,18 +4,25 @@
     ViewBag.Title = "Movie List";
 }
 
-    <h2>Movie List</h2>
+<h2>Movie List</h2>
 <br />
 <p>
     @Html.ActionLink("New Movie", "CreateMovie", "Movies", null, new { @class = "btn btn-primary" })
 </p>
-
+@if (!Model.Any())
+{
+    <p>No Records Found</p>
+}
+else
+{
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Movie</th>
             <th>Genre</th>
             <th>Number In Stock</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,4 +50,6 @@
     </tbody>
 
 </table>
+}
+
 

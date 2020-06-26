@@ -17,6 +17,7 @@ namespace MVCVidly.Models
         public byte MembershipTypeId { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
         [Display(Name ="Birth Date")]
+        [If18YearsOld]
         public DateTime? BirthDate { get; set; }
     }
 }
