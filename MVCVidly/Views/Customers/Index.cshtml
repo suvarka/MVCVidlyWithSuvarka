@@ -17,34 +17,64 @@
 else
 {
 
-<br />
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Membership Type</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in Model)
-        {
-            using (Html.BeginForm("Delete", "Customers", new { id = customer.Id }))
-            {
+    <br />
+    <table id="customers" class="table table-bordered table-hover">
+        <thead>
             <tr>
-                <td>@Html.ActionLink(@customer.Name,"Edit",new {id=customer.Id})</td>
-                <td>@customer.MembershipType.Name</td>
-                <td>
-                    @Html.ActionLink("Details", "Details", "Customers", new { id = customer.Id }, new { @class = "btn btn-primary" })
-                </td>
-                <td>
-                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure, Do you want to delete this customer?')"/>
-                </td>
+                <th>Name</th>
+                <th>Membership Type</th>
+                <th>Details</th>
+                <th>Delete</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                //using (Html.BeginForm("Delete", "Customers", new { id = customer.Id }))
+                //{
+                <tr>
+                    <td>@Html.ActionLink(@customer.Name, "Edit", new { id = customer.Id })</td>
+                    <td>@customer.MembershipType.Name</td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "Customers", new { id = customer.Id }, new { @class = "btn btn-primary" })
+                    </td>
+                    @*<td>
+                            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure, Do you want to delete this customer?')"/>
+                        </td>*@
+                    <td><button data-customer-id="@customer.Id" class="btn btn-danger js-delete">Delete</button> </td>
+                </tr>
+                @*}*@
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
 }
 
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#customers .js-delete').on("click", function ()
+            {
+                var button = $(this);
+
+                bootbox.confirm('Are you sure, do you want to delet this customer record?', function (result) {
+                    if (result)
+                    {
+                        $.ajax({
+                            url: "api/Customer/" + button.attr("data-customer-id"),
+                            method: "Delete",
+                            success: function () {
+                                button.parents('tr').remove();
+                            }
+                        })
+                    }
+                })
+
+                //if (confirm('Are you sure, do you want to delete the customer record?'))
+                //{
+                    
+                //}                                  
+            })
+        });
+    </script>
+}
