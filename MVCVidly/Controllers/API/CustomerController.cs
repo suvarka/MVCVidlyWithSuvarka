@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace MVCVidly.Controllers.API
 {
@@ -27,7 +28,8 @@ namespace MVCVidly.Controllers.API
         //Get /api/Customer
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            var customerList= _context.Customers.Include(c => c.MembershipType).ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return customerList;
         }
 
         //Get /api/Customer/1

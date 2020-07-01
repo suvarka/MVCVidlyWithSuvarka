@@ -25,8 +25,8 @@ namespace MVCVidly.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var CustomerList = _context.Customers.Include(c => c.MembershipType).ToList();
-            return View(CustomerList);
+            //var CustomerList = _context.Customers.Include(c => c.MembershipType).ToList();
+            return View();
         }
 
         public ActionResult CreateCustomer()

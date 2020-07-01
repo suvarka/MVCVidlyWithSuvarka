@@ -12,6 +12,8 @@ namespace MVCVidly.Dtos
         [Required]
         public string Name { get; set; }              
         public byte MembershipTypeId { get; set; }
+
+        public MemberShipTypeDto MemberShipType { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }       
         public DateTime? BirthDate { get; set; }
     }
