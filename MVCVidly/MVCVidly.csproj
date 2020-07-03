@@ -227,6 +227,10 @@
     <Compile Include="Migrations\202006241116202_updateChanges.Designer.cs">
       <DependentUpon>202006241116202_updateChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007031133119_UserLoginDetails.cs" />
+    <Compile Include="Migrations\202007031133119_UserLoginDetails.Designer.cs">
+      <DependentUpon>202007031133119_UserLoginDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -520,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006241116202_updateChanges.resx">
       <DependentUpon>202006241116202_updateChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007031133119_UserLoginDetails.resx">
+      <DependentUpon>202007031133119_UserLoginDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
