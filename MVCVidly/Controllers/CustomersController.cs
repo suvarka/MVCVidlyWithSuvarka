@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace MVCVidly.Controllers
 {
+    
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,6 +23,8 @@ namespace MVCVidly.Controllers
         {
             _context.Dispose();
         }
+
+        
         // GET: Customers
         public ActionResult Index()
         {
