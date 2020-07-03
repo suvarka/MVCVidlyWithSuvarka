@@ -27,8 +27,9 @@ namespace MVCVidly.Controllers
         // GET: Movies
         public ActionResult Index()
         {
-            var MovieList = _context.Movies.Include(m=>m.Genre).ToList();
-            return View(MovieList);
+            //var MovieList = _context.Movies.Include(m=>m.Genre).ToList();
+            //return View(MovieList);
+            return View();
         }
 
         public ActionResult CreateMovie()

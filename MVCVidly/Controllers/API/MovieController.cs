@@ -43,12 +43,14 @@ namespace MVCVidly.Controllers.API
         //    return movie;
         //}
 
-        public MovieDto GetMovie(int id)
+        public IHttpActionResult GetMovie(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
             if (movie == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            return Mapper.Map<Movie,MovieDto>(movie);
+                //throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
+            //return Mapper.Map<Movie,MovieDto>(movie);
+            return Ok(Mapper.Map<Movie, MovieDto>(movie));
         }
 
         //Post/api/Movie
@@ -64,17 +66,20 @@ namespace MVCVidly.Controllers.API
         //    return movie;
 
         //}
-        public MovieDto CreateMovie(MovieDto movieDto)
+        public IHttpActionResult CreateMovie(MovieDto movieDto)
         {
             if (movieDto == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                // throw new HttpResponseException(HttpStatusCode.NotFound);
+                return BadRequest();
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                // throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             var movie = Mapper.Map<MovieDto, Movie>(movieDto);
             _context.Movies.Add(movie);
             _context.SaveChanges();
             movieDto.Id = movie.Id;
-            return movieDto;
+            //return movieDto;
+            return Created(new Uri(Request.RequestUri + "/" + movie.Id), movieDto);
 
         }
 
