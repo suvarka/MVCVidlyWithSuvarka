@@ -1,0 +1,49 @@
+﻿
+
+@{
+    ViewBag.Title = "Movie List";
+}
+
+<h2>Movie List</h2>
+<br />
+
+<table id="movies" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+
+</table>
+@*}*@
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $('#movies').DataTable({
+                ajax: {
+                    url: "/api/Movie",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "name"
+                    }
+
+                ]
+            });
+        })
+    </script>
+}
+
+
+
+
+

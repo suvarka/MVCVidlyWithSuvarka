@@ -29,9 +29,14 @@ namespace MVCVidly.Controllers
         {
             //var MovieList = _context.Movies.Include(m=>m.Genre).ToList();
             //return View(MovieList);
-            return View();
+
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View("MoviesList");
+            return View("ReadOnlyMovies");
+
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult CreateMovie()
         {
             var genreList = _context.Genres.ToList();
@@ -43,7 +48,7 @@ namespace MVCVidly.Controllers
 
             };
             return View("MovieForm", newMovieViewModel);
-            
+
         }
 
         [HttpPost]
@@ -80,7 +85,7 @@ namespace MVCVidly.Controllers
 
 
             }
-               
+
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -90,7 +95,7 @@ namespace MVCVidly.Controllers
             MovieFormViewModel movieFormViewModel = new MovieFormViewModel()
             {
                 Genres = _context.Genres.ToList(),
-                Movie=movieList
+                Movie = movieList
             };
             return View("MovieForm", movieFormViewModel);
         }
@@ -103,7 +108,7 @@ namespace MVCVidly.Controllers
 
         public RedirectToRouteResult Delete(int id)
         {
-            var movieDetails = _context.Movies.Where(m => m.Id ==id).FirstOrDefault();
+            var movieDetails = _context.Movies.Where(m => m.Id == id).FirstOrDefault();
             _context.Movies.Remove(movieDetails);
             _context.SaveChanges();
             return RedirectToAction("Index");

@@ -65,6 +65,10 @@ namespace MVCVidly.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(256)]
+        [Display(Name = "Driving License")]
+        public string DrivingLicense { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<MVCVidly.Models.Movie>*@
+﻿@model IEnumerable<MVCVidly.Models.Movie>
 
 @{
     ViewBag.Title = "Movie List";
@@ -9,6 +9,8 @@
 <p>
     @Html.ActionLink("New Movie", "CreateMovie", "Movies", null, new { @class = "btn btn-primary" })
 </p>
+
+
 @*@if (!Model.Any())
 {
     <p>No Records Found</p>

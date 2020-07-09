@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MVCVidly.Models;
 using MVCVidly.ViewModel;
 using System.Data.Entity;
+using System.Runtime.Caching;
 
 namespace MVCVidly.Controllers
 {
@@ -28,6 +29,7 @@ namespace MVCVidly.Controllers
         // GET: Customers
         public ActionResult Index()
         {
+
             //var CustomerList = _context.Customers.Include(c => c.MembershipType).ToList();
             return View();
         }
